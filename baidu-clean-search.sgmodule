@@ -1,0 +1,9 @@
+#!name=百度纯净搜索
+#!desc=将百度桌面版和移动版首页替换为纯净搜索页，不影响搜索结果。
+#!system=ios
+
+[Map Local]
+^https?:\/\/(?:www|m)\.baidu\.com\/?(?:\?[^#]*)?$ data-type=file data="https://raw.githubusercontent.com/Jimmyzsan/baidu-clean-search/main/index.html" header="Content-Type:text/html;charset=UTF-8"
+
+[MITM]
+hostname = %APPEND% www.baidu.com, m.baidu.com
