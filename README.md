@@ -14,20 +14,36 @@
 
 ## 重写规则
 
+### Surge 模块（推荐）
+
+直接安装以下模块：
+
+```text
+https://raw.githubusercontent.com/Jimmyzsan/baidu-clean-search/main/baidu-clean-search.sgmodule
+```
+
+模块已经包含 `[Map Local]` 和百度 HTTPS 解密主机名，不要只复制中间的一条正则。
+
+### 手动配置
+
 ```ini
+[Map Local]
 ^https?:\/\/(?:www|m)\.baidu\.com\/?(?:\?[^#]*)?$ data-type=file data="https://raw.githubusercontent.com/Jimmyzsan/baidu-clean-search/main/index.html" header="Content-Type: text/html; charset=utf-8"
+
+[MITM]
+hostname = %APPEND% www.baidu.com, m.baidu.com
 ```
 
 也可以直接引用 [`rewrite.conf`](https://raw.githubusercontent.com/Jimmyzsan/baidu-clean-search/main/rewrite.conf)。
 
 ## 使用
 
-1. 将上面的规则加入支持 `data-type=file` 的重写工具。
-2. 开启 HTTPS 解密，并将 `www.baidu.com`、`m.baidu.com` 加入主机名列表。
-3. 重新打开 `https://www.baidu.com/` 或 `https://m.baidu.com/`。
+1. 在 Surge 的模块页面添加上面的 `.sgmodule` 链接并启用。
+2. 确认 Surge 的 MITM 证书已安装并信任。
+3. 彻底关闭百度标签页，清理网页缓存后重新打开 `https://www.baidu.com/`。
 
-不同客户端对规则分区名称和 HTTPS 解密设置的叫法可能不同。首次启用后若仍显示百度原首页，
-请清理浏览器缓存并确认重写功能已开启。
+生效后的页面只会看到“百度”标题、一个搜索框和“百度一下”按钮。如果仍有新闻、热榜或广告，
+说明看到的仍是百度原始页面，应检查模块是否启用、MITM 是否开启，以及请求是否经过 Surge。
 
 ## 安全
 
